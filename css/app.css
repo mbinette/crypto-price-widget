@@ -194,6 +194,10 @@ ul {
         .coin-list .block .quantity-value {
           color: #b2ff93;
         }
+      .coin-list .col {
+        display: inline-block;
+        width: 45px;
+      }
       .coin-list li .sym {
         border: 1px solid #252525;
         border-left-width: 2px;

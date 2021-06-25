@@ -229,9 +229,9 @@ function updateData() {
 
           //console.log(span);
           span.innerHTML =
-            '<span class="sym">' +
+            '<div class="col"><span class="sym">' +
             coinSymbol +
-            "</span> " +
+            "</div></span> " +
             coinRate +
             '<span class="change">' +
             coinDISPLAYchange +
@@ -390,7 +390,10 @@ document.getElementById("saveQuantities").onclick = function () {
 // Settings - list of coins
 function loadJSON(callback) {
   //Stored local version of https://www.cryptocompare.com/api/data/coinlist/ for performance
-  var file = "./coinlist.json";
+  // var file = "./coinlist.json";
+
+  // Summary is much smaller. Load each time to make sure we have the latest list
+  var file = "https://min-api.cryptocompare.com/data/all/coinlist?summary=true"
   var xobj = new XMLHttpRequest();
   xobj.overrideMimeType("application/json");
   xobj.open("GET", file, true);
@@ -422,23 +425,23 @@ loadJSON(function (response) {
     label.className = "coinName";
     var div = document.createElement("div");
     checkBox.type = "checkbox";
-    checkBox.value = actual_JSON.Data[key].Name;
-    checkBox.id = actual_JSON.Data[key].Name;
-    label.htmlFor = actual_JSON.Data[key].Name;
+    checkBox.value = actual_JSON.Data[key].Symbol;
+    checkBox.id = actual_JSON.Data[key].Symbol;
+    label.htmlFor = actual_JSON.Data[key].Symbol;
     checkBox.name = "cl[]";
     //check the coins the user has already set
     var str = String(settings.get("user.coins"));
     var split_str = str.split(",");
-    if (split_str.indexOf(actual_JSON.Data[key].Name) !== -1) {
+    if (split_str.indexOf(actual_JSON.Data[key].Symbox) !== -1) {
       checkBox.checked = true;
     }
     myDiv.appendChild(li);
     li.appendChild(checkBox);
     li.appendChild(label);
-    label.appendChild(document.createTextNode(actual_JSON.Data[key].CoinName));
-    label.appendChild(
-      document.createTextNode(" (" + actual_JSON.Data[key].Name + ")")
-    );
+    label.appendChild(document.createTextNode(actual_JSON.Data[key].FullName));
+    // label.appendChild(
+    //   document.createTextNode(" (" + actual_JSON.Data[key].Name + ")")
+    // );
     label.appendChild(div);
   }); //forEach
 }); //loadJSON
