@@ -432,7 +432,7 @@ loadJSON(function (response) {
     //check the coins the user has already set
     var str = String(settings.get("user.coins"));
     var split_str = str.split(",");
-    if (split_str.indexOf(actual_JSON.Data[key].Symbox) !== -1) {
+    if (split_str.indexOf(actual_JSON.Data[key].Symbol) !== -1) {
       checkBox.checked = true;
     }
     myDiv.appendChild(li);
