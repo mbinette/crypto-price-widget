@@ -52,6 +52,7 @@ var url =
   base +
   "&extraParams=crypto-price-widget";
 var pinCheck = document.getElementById("pin-to-top");
+var condensedCheck = document.getElementById("condensed");
 
 function clearData() {
   ul.innerHTML = "";
@@ -132,6 +133,15 @@ function initData() {
           } else {
             pinCheck.checked = false;
             remote.getCurrentWindow().setAlwaysOnTop(false);
+          }
+
+          //Condensed text - settings check - immediately set checkbox and window to saved state
+          if (settings.get("user.condensed") == "yes") {
+            condensedCheck.checked = true;
+            document.getElementById("prices").classList.add("condensed");
+          } else {
+            condensedCheck.checked = false;
+            document.getElementById("prices").classList.remove("condensed");
           }
 
           sortChildren(document.getElementById("prices"), function (li) {
@@ -474,6 +484,23 @@ pinCheck.onclick = function (event) {
     //Checkbox has been unchecked
     window.setAlwaysOnTop(false);
     settings.set("user.pinToTop", "no");
+  }
+};
+
+/***********
+ * CONDENSED
+ *************/
+ condensedCheck.onclick = function (event) {
+  var window = remote.getCurrentWindow();
+  var checkbox = event.target;
+  if (checkbox.checked) {
+    //Checkbox has been checked
+    document.getElementById("prices").classList.add("condensed");
+    settings.set("user.condensed", "yes");
+  } else {
+    //Checkbox has been unchecked
+    document.getElementById("prices").classList.remove("condensed");
+    settings.set("user.condensed", "no");
   }
 };
 
